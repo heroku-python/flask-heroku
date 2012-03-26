@@ -10,7 +10,7 @@ from setuptools import setup
 
 
 setup(
-    name='Flask-Heroku',
+    name='flask-heroku',
     version='0.1.0',
     url='https://github.com/kennethreitz/flask-heroku',
     license='BSD',

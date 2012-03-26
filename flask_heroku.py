@@ -9,11 +9,14 @@ class Heroku(object):
         self.app = app
 
         # SQL-Alchemy
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
+        self.app.config.setdefault('SQLALCHEMY_DATABASE_URI', environ.get('DATABASE_URL'))
 
         # Sentry
-        self.app.config['SENTRY_DSN'] = environ.get('SENTRY_DSN')
+        self.app.config.setdefault('SENTRY_DSN', environ.get('SENTRY_DSN'))
 
         # Exceptional
-        self.app.config['EXCEPTIONAL_API_KEY'] = environ.get('EXCEPTIONAL_API_KEY')
+        self.app.config.setdefault('EXCEPTIONAL_API_KEY', environ.get('EXCEPTIONAL_API_KEY'))
+
+        # Flask-GoogleFed
+        self.app.config.setdefault('GOOGLE_DOMAIN', environ.get('GOOGLE_DOMAIN'))
 

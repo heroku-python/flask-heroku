@@ -20,3 +20,6 @@ class Heroku(object):
         # Flask-GoogleFed
         self.app.config.setdefault('GOOGLE_DOMAIN', environ.get('GOOGLE_DOMAIN'))
 
+        # Celery w/ RabbitMQ
+        self.app.config.setdefault('BROKER_URL', environ.get('RABBITMQ_URL'))
+

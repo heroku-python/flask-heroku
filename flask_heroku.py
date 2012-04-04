@@ -23,3 +23,7 @@ class Heroku(object):
         # Celery w/ RabbitMQ
         self.app.config.setdefault('BROKER_URL', environ.get('RABBITMQ_URL'))
 
+        # Mailgun
+        self.app.config.setdefault('SMTP_SERVER', environ.get('MAILGUN_SMTP_SERVER'))
+        self.app.config.setdefault('SMTP_LOGIN', environ.get('MAILGUN_SMTP_LOGIN'))
+        self.app.config.setdefault('SMTP_PASSWORD', environ.get('MAILGUN_SMTP_PASSWORD'))

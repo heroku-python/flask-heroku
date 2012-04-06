@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import urlparse
 from os import environ
 
 class Heroku(object):
@@ -27,3 +28,11 @@ class Heroku(object):
         self.app.config.setdefault('SMTP_SERVER', environ.get('MAILGUN_SMTP_SERVER'))
         self.app.config.setdefault('SMTP_LOGIN', environ.get('MAILGUN_SMTP_LOGIN'))
         self.app.config.setdefault('SMTP_PASSWORD', environ.get('MAILGUN_SMTP_PASSWORD'))
+        
+        # Redis To Go
+        redis_url = environ.get('REDISTOGO_URL')
+        if redis_url:
+            url = urlparse.urlparse(redis_url)
+            self.app.config.setdefault('REDIS_HOST', url.hostname)
+            self.app.config.setdefault('REDIS_PORT', url.port)
+            self.app.config.setdefault('REDIS_PASSWORD', url.password)

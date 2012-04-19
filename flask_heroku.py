@@ -36,3 +36,13 @@ class Heroku(object):
             self.app.config.setdefault('REDIS_HOST', url.hostname)
             self.app.config.setdefault('REDIS_PORT', url.port)
             self.app.config.setdefault('REDIS_PASSWORD', url.password)
+            
+        # Mongolab
+        mongolab_uri = environ.get('MONGOLAB_URI')
+        if mongolab_uri:
+            url = urlparse.urlparse(mongolab_uri)
+            self.app.config.setdefault('MONGODB_USER', url.username)
+            self.app.config.setdefault('MONGODB_PASSWORD', url.password)
+            self.app.config.setdefault('MONGODB_HOST', url.hostname)
+            self.app.config.setdefault('MONGODB_PORT', url.port)
+            self.app.config.setdefault('MONGODB_DB', url.path[1:])

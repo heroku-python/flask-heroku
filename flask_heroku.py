@@ -56,3 +56,8 @@ class Heroku(object):
             self.app.config.setdefault('MONGODB_HOST', url.hostname)
             self.app.config.setdefault('MONGODB_PORT', url.port)
             self.app.config.setdefault('MONGODB_DB', url.path[1:])
+
+        # Memcachier
+        self.app.config.setdefault('MEMCACHED_SERVERS', environ.get('MEMCACHIER_SERVERS'))
+        self.app.config.setdefault('MEMCACHED_USERNAME', environ.get('MEMCACHIER_USERNAME'))
+        self.app.config.setdefault('MEMCACHED_PASSWORD', environ.get('MEMCACHIER_PASSWORD'))

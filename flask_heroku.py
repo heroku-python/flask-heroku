@@ -56,3 +56,8 @@ class Heroku(object):
             self.app.config.setdefault('MONGODB_HOST', url.hostname)
             self.app.config.setdefault('MONGODB_PORT', url.port)
             self.app.config.setdefault('MONGODB_DB', url.path[1:])
+
+        # Cloudant
+        cloudant_uri = environ.get('CLOUDANT_URL')
+        if cloudant_uri:
+            self.app.config.setdefault('COUCHDB_SERVER', cloudant_uri)

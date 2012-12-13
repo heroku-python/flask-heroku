@@ -25,9 +25,23 @@ class Heroku(object):
         self.app.config.setdefault('BROKER_URL', environ.get('RABBITMQ_URL'))
 
         # Mailgun
-        self.app.config.setdefault('SMTP_SERVER', environ.get('MAILGUN_SMTP_SERVER'))
-        self.app.config.setdefault('SMTP_LOGIN', environ.get('MAILGUN_SMTP_LOGIN'))
-        self.app.config.setdefault('SMTP_PASSWORD', environ.get('MAILGUN_SMTP_PASSWORD'))
+        if 'MAILGUN_SMTP_SERVER' in environ:
+            self.app.config.setdefault('SMTP_SERVER', environ.get('MAILGUN_SMTP_SERVER'))
+            self.app.config.setdefault('SMTP_LOGIN', environ.get('MAILGUN_SMTP_LOGIN'))
+            self.app.config.setdefault('SMTP_PASSWORD', environ.get('MAILGUN_SMTP_PASSWORD'))
+            self.app.config.setdefault('MAIL_SERVER', environ.get('MAILGUN_SMTP_SERVER'))
+            self.app.config.setdefault('MAIL_USERNAME', environ.get('MAILGUN_SMTP_LOGIN'))
+            self.app.config.setdefault('MAIL_PASSWORD', environ.get('MAILGUN_SMTP_PASSWORD'))
+            self.app.config.setdefault('MAIL_USE_TLS', True)
+        # SendGrid
+        elif 'SENDGRID_USERNAME' in environ:
+            self.app.config.setdefault('SMTP_SERVER', 'smtp.sendgrid.net')
+            self.app.config.setdefault('SMTP_LOGIN', environ.get('SENDGRID_USERNAME'))
+            self.app.config.setdefault('SMTP_PASSWORD', environ.get('SENDGRID_PASSWORD'))
+            self.app.config.setdefault('MAIL_SERVER', 'smtp.sendgrid.net')
+            self.app.config.setdefault('MAIL_USERNAME', environ.get('SENDGRID_USERNAME'))
+            self.app.config.setdefault('MAIL_PASSWORD', environ.get('SENDGRID_PASSWORD'))
+            self.app.config.setdefault('MAIL_USE_TLS', True)
         
         # Redis To Go
         redis_url = environ.get('REDISTOGO_URL')

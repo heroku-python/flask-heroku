@@ -18,11 +18,16 @@ Usage is pretty simple::
     app = Flask(__name__)
     heroku = Heroku(app)
 
-Configuration is already setup::
+Configuration is already set up::
 
     >>> app.config['SQLALCHEMY_DATABASE_URI']
     postgres://...
 
+Alternatively, Flask's application factory pattern is supported::
+
+    heroku = Heroku()
+    # Then, later...
+    heroku.init_app(app)
 
 Install
 -------

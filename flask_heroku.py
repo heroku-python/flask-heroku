@@ -78,3 +78,8 @@ class Heroku(object):
         cloudant_uri = environ.get('CLOUDANT_URL')
         if cloudant_uri:
             app.config.setdefault('COUCHDB_SERVER', cloudant_uri)
+
+        # Memcachier
+        app.config.setdefault('CACHE_MEMCACHED_SERVERS', environ.get('MEMCACHIER_SERVERS'))
+        app.config.setdefault('CACHE_MEMCACHED_USERNAME', environ.get('MEMCACHIER_USERNAME'))
+        app.config.setdefault('CACHE_MEMCACHED_PASSWORD', environ.get('MEMCACHIER_PASSWORD'))

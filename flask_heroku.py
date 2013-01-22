@@ -7,6 +7,7 @@ class Heroku(object):
     """Heroku configurations for flask."""
 
     def __init__(self, app=None):
+        self.app = app
         if app is not None:
             self.init_app(app)
 

@@ -45,7 +45,7 @@ class Heroku(object):
             app.config.setdefault('MAIL_USERNAME', environ.get('SENDGRID_USERNAME'))
             app.config.setdefault('MAIL_PASSWORD', environ.get('SENDGRID_PASSWORD'))
             app.config.setdefault('MAIL_USE_TLS', True)
-        
+
         # Redis To Go
         redis_url = environ.get('REDISTOGO_URL')
         if redis_url:
@@ -53,7 +53,7 @@ class Heroku(object):
             app.config.setdefault('REDIS_HOST', url.hostname)
             app.config.setdefault('REDIS_PORT', url.port)
             app.config.setdefault('REDIS_PASSWORD', url.password)
-            
+
         # Mongolab
         mongolab_uri = environ.get('MONGOLAB_URI')
         if mongolab_uri:
@@ -63,7 +63,7 @@ class Heroku(object):
             app.config.setdefault('MONGODB_HOST', url.hostname)
             app.config.setdefault('MONGODB_PORT', url.port)
             app.config.setdefault('MONGODB_DB', url.path[1:])
-            
+
         # MongoHQ
         mongohq_uri = environ.get('MONGOHQ_URL')
         if mongohq_uri:

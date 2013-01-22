@@ -13,7 +13,7 @@ Usage
 Usage is pretty simple::
 
     from flask import Flask
-    from flask_heroku import Heroku
+    from flask.ext.heroku import Heroku
 
     app = Flask(__name__)
     heroku = Heroku(app)

@@ -58,6 +58,7 @@ class Heroku(object):
         mongolab_uri = environ.get('MONGOLAB_URI')
         if mongolab_uri:
             url = urlparse.urlparse(mongolab_uri)
+            app.config.setdefault('MONGO_URI', mongolab_uri)
             app.config.setdefault('MONGODB_USER', url.username)
             app.config.setdefault('MONGODB_PASSWORD', url.password)
             app.config.setdefault('MONGODB_HOST', url.hostname)
@@ -68,6 +69,7 @@ class Heroku(object):
         mongohq_uri = environ.get('MONGOHQ_URL')
         if mongohq_uri:
             url = urlparse.urlparse(mongohq_uri)
+            app.config.setdefault('MONGO_URI', mongohq_uri)
             app.config.setdefault('MONGODB_USER', url.username)
             app.config.setdefault('MONGODB_PASSWORD', url.password)
             app.config.setdefault('MONGODB_HOST', url.hostname)

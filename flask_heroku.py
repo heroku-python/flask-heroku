@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
-import urlparse
 from os import environ
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 class Heroku(object):
     """Heroku configurations for flask."""
@@ -49,7 +52,7 @@ class Heroku(object):
         # Redis To Go
         redis_url = environ.get('REDISTOGO_URL')
         if redis_url:
-            url = urlparse.urlparse(redis_url)
+            url = urlparse(redis_url)
             app.config.setdefault('REDIS_HOST', url.hostname)
             app.config.setdefault('REDIS_PORT', url.port)
             app.config.setdefault('REDIS_PASSWORD', url.password)
@@ -57,7 +60,7 @@ class Heroku(object):
         # Mongolab
         mongolab_uri = environ.get('MONGOLAB_URI')
         if mongolab_uri:
-            url = urlparse.urlparse(mongolab_uri)
+            url = urlparse(mongolab_uri)
             app.config.setdefault('MONGO_URI', mongolab_uri)
             app.config.setdefault('MONGODB_USER', url.username)
             app.config.setdefault('MONGODB_PASSWORD', url.password)
@@ -68,7 +71,7 @@ class Heroku(object):
         # MongoHQ
         mongohq_uri = environ.get('MONGOHQ_URL')
         if mongohq_uri:
-            url = urlparse.urlparse(mongohq_uri)
+            url = urlparse(mongohq_uri)
             app.config.setdefault('MONGO_URI', mongohq_uri)
             app.config.setdefault('MONGODB_USER', url.username)
             app.config.setdefault('MONGODB_PASSWORD', url.password)

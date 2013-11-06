@@ -11,11 +11,13 @@ from setuptools import setup
 
 setup(
     name='flask-heroku',
-    version='0.1.3',
+    version='0.1.5',
     url='https://github.com/kennethreitz/flask-heroku',
     license='BSD',
     author='Kenneth Reitz',
     author_email='me@kennethreitz.com',
+    maintainer='David Baumgold',
+    maintainer_email='david@davidbaumgold.com',
     description='Heroku environment variable configurations for Flask',
     long_description=__doc__,
     py_modules=['flask_heroku'],

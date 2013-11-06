@@ -6,6 +6,7 @@ try:
 except ImportError:
     from urlparse import urlparse
 
+
 class Heroku(object):
     """Heroku configurations for flask."""
 

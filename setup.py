@@ -12,7 +12,7 @@ from setuptools import setup
 setup(
     name='flask-heroku',
     version='0.1.5',
-    url='https://github.com/kennethreitz/flask-heroku',
+    url='https://github.com/singingwolfboy/flask-heroku',
     license='BSD',
     author='Kenneth Reitz',
     author_email='me@kennethreitz.com',

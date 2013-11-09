@@ -34,7 +34,7 @@ class Heroku(object):
         # Celery w/ RedisCloud
         elif 'REDISCLOUD_URL' in environ:
             app.config.setdefault('BROKER_URL', environ.get('REDISCLOUD_URL'))
-            app.config.setdefault('BROKER_BACKEND', environ.get('REDISCLOUD_URL'))
+            app.config.setdefault('BROKER_TRANSPORT', environ.get('REDISCLOUD_URL'))
 
         # Mailgun
         if 'MAILGUN_SMTP_SERVER' in environ:

@@ -54,6 +54,15 @@ class Heroku(object):
             app.config.setdefault('MAIL_USERNAME', environ.get('SENDGRID_USERNAME'))
             app.config.setdefault('MAIL_PASSWORD', environ.get('SENDGRID_PASSWORD'))
             app.config.setdefault('MAIL_USE_TLS', True)
+        # Postmark
+        elif 'POSTMARK_SMTP_SERVER' in environ:
+            app.config.setdefault('SMTP_SERVER', 'POSTMARK_SMTP_SERVER')
+            app.config.setdefault('SMTP_LOGIN', environ.get('POSTMARK_API_KEY'))
+            app.config.setdefault('SMTP_PASSWORD', environ.get('POSTMARK_API_KEY'))
+            app.config.setdefault('MAIL_SERVER', 'POSTMARK_SMTP_SERVER')
+            app.config.setdefault('MAIL_USERNAME', environ.get('POSTMARK_API_KEY'))
+            app.config.setdefault('MAIL_PASSWORD', environ.get('POSTMARK_API_KEY'))
+            app.config.setdefault('MAIL_USE_TLS', True)
 
         # Redis To Go
         redis_url = environ.get('REDISTOGO_URL')

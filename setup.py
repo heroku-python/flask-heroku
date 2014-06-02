@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name='flask-heroku',
-    version='0.1.8',
+    version='0.1.9',
     url='https://github.com/kennethreitz/flask-heroku',
     license='BSD',
     author='Kenneth Reitz',

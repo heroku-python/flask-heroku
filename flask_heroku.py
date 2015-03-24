@@ -78,6 +78,7 @@ class Heroku(object):
             url = urlparse(mongolab_uri)
             app.config.setdefault('MONGO_URI', mongolab_uri)
             app.config.setdefault('MONGODB_USER', url.username)
+            app.config.setdefault('MONGODB_USERNAME', url.username)
             app.config.setdefault('MONGODB_PASSWORD', url.password)
             app.config.setdefault('MONGODB_HOST', url.hostname)
             app.config.setdefault('MONGODB_PORT', url.port)

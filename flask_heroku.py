@@ -16,6 +16,9 @@ class Heroku(object):
             self.init_app(app)
 
     def init_app(self, app):
+        # app.secret_key
+        app.config.setdefault('SECRET_KEY', environ.get('SECRET_KEY'))
+
         # SQL-Alchemy
         app.config.setdefault('SQLALCHEMY_DATABASE_URI', environ.get('DATABASE_URL'))
 

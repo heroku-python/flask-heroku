@@ -66,7 +66,7 @@ class Heroku(object):
             app.config.setdefault('MAIL_USERNAME', environ.get('POSTMARK_API_KEY'))
             app.config.setdefault('MAIL_PASSWORD', environ.get('POSTMARK_API_KEY'))
             app.config.setdefault('MAIL_USE_TLS', True)
-            
+
         # Heroku Redis
         redis_url = environ.get('REDIS_URL')
         if redis_url:

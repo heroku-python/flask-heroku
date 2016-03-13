@@ -74,7 +74,7 @@ class Heroku(object):
             app.config.setdefault('REDIS_HOST', url.hostname)
             app.config.setdefault('REDIS_PORT', url.port)
             app.config.setdefault('REDIS_PASSWORD', url.password)
-            
+
         # Redis To Go
         redis_url = environ.get('REDISTOGO_URL')
         if redis_url:

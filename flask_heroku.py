@@ -85,28 +85,30 @@ class Heroku(object):
             app.config.setdefault('REDIS_PORT', url.port)
             app.config.setdefault('REDIS_PASSWORD', url.password)
 
-        # Mongolab
-        mongolab_uri = environ.get('MONGOLAB_URI')
-        # MongoHQ
-        mongohq_uri = environ.get('MONGOHQ_URL')
-        # mLab MongoHQ
-        mlab_mongo_uri = environ.get('MONGODB_URI')
+        # Mongolab, MongoHQ and mLab MongoHQ
+        mongo_addon_vars = {'MONGOLAB_URI', 'MONGOHQ_URL', 'MONGODB_URI'}
+        defined_env_vars = set(environ.keys())
 
-        if sum(1 for uri in (
-                mongolab_uri, mongohq_uri, mlab_mongo_uri) if uri) > 1:
-            logger.error('There are conflicting settings for Mongo')
-        else:
-            mongo_uri = mongolab_uri or mongohq_uri or mlab_mongo_uri
+        defined_mongo_addons = defined_env_vars & mongo_addon_vars
 
-            if mongo_uri:
-                url = urlparse(mongo_uri)
-                app.config.setdefault('MONGO_URI', mongo_uri)
-                app.config.setdefault('MONGODB_USER', url.username)
-                app.config.setdefault('MONGODB_USERNAME', url.username)
-                app.config.setdefault('MONGODB_PASSWORD', url.password)
-                app.config.setdefault('MONGODB_HOST', url.hostname)
-                app.config.setdefault('MONGODB_PORT', url.port)
-                app.config.setdefault('MONGODB_DB', url.path[1:])
+        if len(defined_mongo_addons) == 1:
+            mongo_addon_var = defined_mongo_addons.pop()
+            mongo_uri = environ[mongo_addon_var]
+
+            url = urlparse(mongo_uri)
+            app.config.setdefault('MONGO_URI', mongo_uri)
+            app.config.setdefault('MONGODB_USER', url.username)
+            app.config.setdefault('MONGODB_USERNAME', url.username)
+            app.config.setdefault('MONGODB_PASSWORD', url.password)
+            app.config.setdefault('MONGODB_HOST', url.hostname)
+            app.config.setdefault('MONGODB_PORT', url.port)
+            app.config.setdefault('MONGODB_DB', url.path[1:])
+
+        elif len(defined_mongo_addons) > 1:
+            logger.error(
+                'Multiple MongoDB addons enabled. Flask-Heroku cannot '
+                'determine which to use.')
+
 
         # Cloudant
         cloudant_uri = environ.get('CLOUDANT_URL')

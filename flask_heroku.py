@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+from logging import getLogger
 from os import environ
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
 
+logger = getLogger(__name__)
 
 class Heroku(object):
     """Heroku configurations for flask."""
@@ -83,11 +85,18 @@ class Heroku(object):
             app.config.setdefault('REDIS_PORT', url.port)
             app.config.setdefault('REDIS_PASSWORD', url.password)
 
-        # Mongolab
-        mongolab_uri = environ.get('MONGOLAB_URI')
-        if mongolab_uri:
-            url = urlparse(mongolab_uri)
-            app.config.setdefault('MONGO_URI', mongolab_uri)
+        # Mongolab, MongoHQ and mLab MongoHQ
+        mongo_addon_vars = {'MONGOLAB_URI', 'MONGOHQ_URL', 'MONGODB_URI'}
+        defined_env_vars = set(environ.keys())
+
+        defined_mongo_addons = defined_env_vars & mongo_addon_vars
+
+        if len(defined_mongo_addons) == 1:
+            mongo_addon_var = defined_mongo_addons.pop()
+            mongo_uri = environ[mongo_addon_var]
+
+            url = urlparse(mongo_uri)
+            app.config.setdefault('MONGO_URI', mongo_uri)
             app.config.setdefault('MONGODB_USER', url.username)
             app.config.setdefault('MONGODB_USERNAME', url.username)
             app.config.setdefault('MONGODB_PASSWORD', url.password)
@@ -95,16 +104,11 @@ class Heroku(object):
             app.config.setdefault('MONGODB_PORT', url.port)
             app.config.setdefault('MONGODB_DB', url.path[1:])
 
-        # MongoHQ
-        mongohq_uri = environ.get('MONGOHQ_URL')
-        if mongohq_uri:
-            url = urlparse(mongohq_uri)
-            app.config.setdefault('MONGO_URI', mongohq_uri)
-            app.config.setdefault('MONGODB_USER', url.username)
-            app.config.setdefault('MONGODB_PASSWORD', url.password)
-            app.config.setdefault('MONGODB_HOST', url.hostname)
-            app.config.setdefault('MONGODB_PORT', url.port)
-            app.config.setdefault('MONGODB_DB', url.path[1:])
+        elif len(defined_mongo_addons) > 1:
+            logger.error(
+                'Multiple MongoDB addons enabled. Flask-Heroku cannot '
+                'determine which to use.')
+
 
         # Cloudant
         cloudant_uri = environ.get('CLOUDANT_URL')
